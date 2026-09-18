@@ -1,0 +1,11 @@
+.card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 22px;
+  max-width: 760px;
+}
+.ask { display: flex; gap: 8px; }
+.ask input { flex: 1; }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0 16px; }
+article p { line-height: 1.6; }

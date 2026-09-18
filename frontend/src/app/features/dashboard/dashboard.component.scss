@@ -1,0 +1,45 @@
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.kpis article {
+  background: #fff;
+  border: 1px solid var(--line);
+  padding: 18px;
+  border-radius: 16px;
+}
+
+.kpis span { color: var(--mute); font-size: 13px; }
+.kpis strong { display: block; font-size: 32px; margin-top: 6px; }
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap: 16px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 22px;
+}
+
+.insight {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.insight p { margin: 6px 0 0; color: var(--mute); }
+.insight[data-sev="danger"] b { color: #b42318; }
+.insight[data-sev="warning"] b { color: #b45309; }
+.insight[data-sev="ok"] b { color: #1f8a70; }
+
+ol { padding-left: 18px; line-height: 1.7; }
+
+@media (max-width: 960px) {
+  .kpis, .grid { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,89 @@
+:root {
+  --ink: #102033;
+  --accent: #e2b15a;
+  --paper: #f3efe6;
+  --mute: #667085;
+  --line: #e4ddd0;
+  --sans: "IBM Plex Sans", "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+}
+
+app-root, app-shell {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+input, textarea, select, button {
+  font: inherit;
+}
+
+input, textarea, select {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+textarea { resize: vertical; }
+
+.btn, .ghost, .link {
+  border: 0;
+  cursor: pointer;
+}
+
+.btn {
+  background: var(--ink);
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px 14px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn:disabled, .ghost:disabled { opacity: .5; cursor: not-allowed; }
+
+.ghost {
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+
+.link {
+  background: none;
+  color: #155eef;
+  text-decoration: none;
+}
+
+.muted { color: var(--mute); }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  text-align: left;
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+code {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  background: #efe8d8;
+  padding: 2px 6px;
+  border-radius: 6px;
+}

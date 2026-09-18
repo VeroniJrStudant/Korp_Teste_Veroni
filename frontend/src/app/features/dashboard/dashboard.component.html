@@ -1,0 +1,45 @@
+@if (loading) {
+  <p class="muted">Carregando painel…</p>
+} @else {
+  <div class="kpis">
+    <article>
+      <span>Produtos</span>
+      <strong>{{ products.length }}</strong>
+    </article>
+    <article>
+      <span>Saldo total</span>
+      <strong>{{ stockTotal }}</strong>
+    </article>
+    <article>
+      <span>Notas abertas</span>
+      <strong>{{ openCount }}</strong>
+    </article>
+    <article>
+      <span>Notas fechadas</span>
+      <strong>{{ closedCount }}</strong>
+    </article>
+  </div>
+
+  <div class="grid">
+    <section class="card">
+      <h2>Insights do assistente</h2>
+      @for (item of insights; track item.title) {
+        <div class="insight" [attr.data-sev]="item.severity">
+          <b>{{ item.title }}</b>
+          <p>{{ item.detail }}</p>
+        </div>
+      }
+    </section>
+
+    <section class="card">
+      <h2>Como demonstrar o teste</h2>
+      <ol>
+        <li>Cadastre ou use os produtos já semeados, inclusive <code>PAR-M8</code> com saldo 1.</li>
+        <li>Crie uma nota Aberta com vários produtos e clique em Imprimir.</li>
+        <li>Ative <b>Simular falha do estoque</b>, tente imprimir outra nota e veja a recuperação.</li>
+        <li>Crie duas notas com o mesmo parafuso e imprima as duas para concorrência.</li>
+      </ol>
+      <a class="btn" routerLink="/notas/nova">Nova nota fiscal</a>
+    </section>
+  </div>
+}

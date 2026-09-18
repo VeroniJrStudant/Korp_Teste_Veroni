@@ -1,0 +1,51 @@
+<div class="split">
+  <form class="card" [formGroup]="form" (ngSubmit)="save()">
+    <h2>{{ editing ? 'Editar produto' : 'Novo produto' }}</h2>
+    <label>
+      Código
+      <input #codeInput formControlName="code" placeholder="ACO-1020" />
+    </label>
+    <label>
+      Descrição
+      <textarea formControlName="description" rows="3" placeholder="Nome do produto"></textarea>
+    </label>
+    <label>
+      Saldo
+      <input type="number" min="0" step="1" formControlName="balance" />
+    </label>
+    <div class="actions">
+      <button type="button" class="ghost" (click)="suggest()" [disabled]="suggesting">Gerar descrição com IA</button>
+      <button type="submit" class="btn" [disabled]="saving">{{ editing ? 'Salvar' : 'Cadastrar' }}</button>
+      @if (editing) {
+        <button type="button" class="ghost" (click)="reset()">Cancelar</button>
+      }
+    </div>
+  </form>
+
+  <section class="card">
+    <div class="toolbar">
+      <h2>Estoque</h2>
+      <input [formControl]="search" placeholder="Buscar código ou descrição" />
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Descrição</th>
+          <th>Saldo</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (product of products; track product.id) {
+          <tr>
+            <td><code>{{ product.code }}</code></td>
+            <td>{{ product.description }}</td>
+            <td [class.low]="product.balance <= 1">{{ product.balance }}</td>
+            <td><button type="button" class="link" (click)="edit(product)">Editar</button></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </section>
+</div>

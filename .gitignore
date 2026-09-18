@@ -1,0 +1,10 @@
+bin/
+obj/
+.vs/
+.idea/
+.angular/
+dist/
+node_modules/
+*.user
+.DS_Store
+logs/

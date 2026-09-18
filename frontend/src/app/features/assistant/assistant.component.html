@@ -1,0 +1,23 @@
+<section class="card">
+  <h2>Assistente de domínio</h2>
+  <p class="muted">IA aplicada ao faturamento: analisa notas e estoque sem depender de API externa.</p>
+  <div class="ask">
+    <input [(ngModel)]="question" (keyup.enter)="ask()" placeholder="Pergunte sobre impressão, falha ou concorrência" />
+    <button class="btn" type="button" (click)="ask()" [disabled]="loading">Perguntar</button>
+  </div>
+  <div class="chips">
+    <button type="button" class="ghost" (click)="question = 'Quais notas estão abertas?'; ask()">Notas abertas</button>
+    <button type="button" class="ghost" (click)="question = 'Como testar concorrência?'; ask()">Concorrência</button>
+    <button type="button" class="ghost" (click)="question = 'Como simular falha do estoque?'; ask()">Falha</button>
+  </div>
+  @if (reply) {
+    <article>
+      <p>{{ reply.answer }}</p>
+      <ul>
+        @for (item of reply.highlights; track item) {
+          <li>{{ item }}</li>
+        }
+      </ul>
+    </article>
+  }
+</section>

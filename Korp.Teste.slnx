@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/services/" />
+  <Folder Name="/services/billing-api/">
+    <Project Path="services/billing-api/Korp.Billing.Api.csproj" />
+  </Folder>
+  <Folder Name="/services/stock-api/">
+    <Project Path="services/stock-api/Korp.Stock.Api.csproj" />
+  </Folder>
+</Solution>

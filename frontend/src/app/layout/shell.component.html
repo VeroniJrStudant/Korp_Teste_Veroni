@@ -1,0 +1,43 @@
+<a class="skip" href="#conteudo">Ir para o conteúdo</a>
+
+<aside class="rail">
+  <div class="brand">
+    <span class="mark">K</span>
+    <div>
+      <strong>Korp Faturamento</strong>
+      <small>Notas · Estoque · Microsserviços</small>
+    </div>
+  </div>
+
+  <nav>
+    <a routerLink="/" routerLinkActive="on" [routerLinkActiveOptions]="{exact: true}">Painel</a>
+    <a routerLink="/produtos" routerLinkActive="on">Produtos</a>
+    <a routerLink="/notas" routerLinkActive="on">Notas fiscais</a>
+    <a routerLink="/assistente" routerLinkActive="on">Assistente</a>
+  </nav>
+
+  <div class="health">
+    <p>Status das APIs</p>
+    <div class="pill" [class.down]="!stockOk">Estoque {{ stockOk ? 'online' : 'falhou' }}</div>
+    <div class="pill" [class.down]="!billingOk">Faturamento {{ billingOk ? 'online' : 'falhou' }}</div>
+    <button type="button" class="chaos" [class.on]="chaos" [disabled]="toggling" (click)="toggleChaos()">
+      {{ chaos ? 'Restaurar estoque' : 'Simular falha do estoque' }}
+    </button>
+  </div>
+</aside>
+
+<section class="stage">
+  <header>
+    <h1>{{ pageTitle }}</h1>
+    <span class="hint">Aviso: o saldo do estoque só é baixado no botão Imprimir nota</span>
+  </header>
+  <main id="conteudo">
+    <router-outlet />
+  </main>
+</section>
+
+<div class="toasts">
+  @for (toast of toasts; track toast.id) {
+    <div class="toast" [class.error]="toast.kind === 'error'" [class.ok]="toast.kind === 'ok'">{{ toast.text }}</div>
+  }
+</div>

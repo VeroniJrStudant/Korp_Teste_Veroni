@@ -1,0 +1,34 @@
+<div class="head">
+  <p class="muted">Notas nascem Abertas. A impressão fecha a nota e baixa o estoque.</p>
+  <a class="btn" routerLink="/notas/nova">Nova nota</a>
+</div>
+
+<section class="card">
+  <table>
+    <thead>
+      <tr>
+        <th>Número</th>
+        <th>Status</th>
+        <th>Itens</th>
+        <th>Criada em</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (invoice of invoices; track invoice.id) {
+        <tr>
+          <td><b>NF {{ pad(invoice.number) }}</b></td>
+          <td><span class="badge" [class.closed]="invoice.status === 'Fechada'">{{ invoice.status }}</span></td>
+          <td>{{ invoice.items.length }}</td>
+          <td>{{ invoice.createdAt | date:'short' }}</td>
+          <td>
+            <a class="link" [routerLink]="['/notas', invoice.id]">Abrir</a>
+            <a class="btn print-link" [routerLink]="['/notas', invoice.id]">Imprimir</a>
+          </td>
+        </tr>
+      } @empty {
+        <tr><td colspan="5" class="muted">Nenhuma nota cadastrada.</td></tr>
+      }
+    </tbody>
+  </table>
+</section>

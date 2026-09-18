@@ -1,0 +1,36 @@
+.split {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 16px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 22px;
+}
+
+form {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+
+label { display: grid; gap: 6px; font-size: 13px; color: var(--mute); }
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.toolbar input { max-width: 260px; }
+
+.actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.low { color: #b42318; font-weight: 700; }
+
+@media (max-width: 960px) {
+  .split { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,92 @@
+<div class="wrap">
+  <a class="link" routerLink="/notas">← Voltar</a>
+
+  <section class="card">
+    <div class="title">
+      <div>
+        <h2>{{ invoice ? 'NF ' + pad(invoice.number) : 'Nova nota fiscal' }}</h2>
+        @if (invoice) {
+          <span class="badge" [class.closed]="invoice.status === 'Fechada'">{{ invoice.status }}</span>
+        }
+      </div>
+    </div>
+
+    @if (invoice) {
+      <button type="button" class="btn print" (click)="print()" [disabled]="printing">
+        {{ invoice.status === 'Aberta' ? 'Imprimir nota fiscal' : 'Reimprimir documento' }}
+      </button>
+    }
+
+    <p class="muted">Numeração sequencial gerada pelo faturamento. Status inicial: Aberta.</p>
+
+    <h3>Itens</h3>
+    @for (item of items; track $index) {
+      <app-invoice-item-row
+        [item]="item"
+        [products]="products"
+        (itemChange)="updateItem($index, $event)"
+        (remove)="removeItem($index)"
+      />
+    }
+    <button #addBtn type="button" class="ghost" (click)="addItem()" [disabled]="!canEdit">Adicionar produto</button>
+
+    @if (canEdit) {
+      <div class="actions">
+        <button type="button" class="btn" (click)="save()" [disabled]="saving">
+          {{ invoice ? 'Salvar itens' : 'Criar nota Aberta' }}
+        </button>
+      </div>
+    } @else {
+      <p class="muted">Nota fechada: itens e estoque não são alterados em reimpressões.</p>
+    }
+  </section>
+</div>
+
+@if (printing) {
+  <div class="overlay">
+    <div class="panel">
+      <div class="spinner"></div>
+      <h3>Processando impressão</h3>
+      <p>{{ printMessage }}</p>
+    </div>
+  </div>
+}
+
+@if (showPreview && invoice) {
+  <div class="overlay" (click)="showPreview = false">
+    <article class="danfe" (click)="$event.stopPropagation()">
+      <header>
+        <div>
+          <b>KORP FATURAMENTO</b>
+          <small>Documento de demonstração — não é NF-e SEFAZ</small>
+        </div>
+        <div class="num">
+          <span>NOTA FISCAL</span>
+          <strong>{{ pad(invoice.number) }}</strong>
+          <em>{{ invoice.status }}</em>
+        </div>
+      </header>
+      <table>
+        <thead>
+          <tr><th>Código</th><th>Descrição</th><th>Qtd</th></tr>
+        </thead>
+        <tbody>
+          @for (item of invoice.items; track item.id) {
+            <tr>
+              <td>{{ item.productCode }}</td>
+              <td>{{ item.productDescription }}</td>
+              <td>{{ item.quantity }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      <footer>
+        <span>Impressa em {{ invoice.closedAt | date:'short' }}</span>
+        <div class="actions">
+          <button type="button" class="btn" (click)="printPaper()">Enviar à impressora</button>
+          <button type="button" class="ghost" (click)="showPreview = false">Fechar</button>
+        </div>
+      </footer>
+    </article>
+  </div>
+}
