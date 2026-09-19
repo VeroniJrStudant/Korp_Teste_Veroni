@@ -8,3 +8,10 @@ node_modules/
 *.user
 .DS_Store
 logs/
+
+# Material de apoio/roteiro nao publicado
+ROTEIRO_VIDEO.md
+ROTEIRO_VIDEO.html
+ROTEIRO_VIDEO.pdf
+DETALHAMENTO_TECNICO.html
+c_ou_go_+_angular.pdf

@@ -1,23 +1,36 @@
-<section class="card">
-  <h2>Assistente de domínio</h2>
-  <p class="muted">IA aplicada ao faturamento: analisa notas e estoque sem depender de API externa.</p>
-  <div class="ask">
-    <input [(ngModel)]="question" (keyup.enter)="ask()" placeholder="Pergunte sobre impressão, falha ou concorrência" />
-    <button class="btn" type="button" (click)="ask()" [disabled]="loading">Perguntar</button>
-  </div>
-  <div class="chips">
-    <button type="button" class="ghost" (click)="question = 'Quais notas estão abertas?'; ask()">Notas abertas</button>
-    <button type="button" class="ghost" (click)="question = 'Como testar concorrência?'; ask()">Concorrência</button>
-    <button type="button" class="ghost" (click)="question = 'Como simular falha do estoque?'; ask()">Falha</button>
-  </div>
-  @if (reply) {
-    <article>
-      <p>{{ reply.answer }}</p>
-      <ul>
-        @for (item of reply.highlights; track item) {
-          <li>{{ item }}</li>
-        }
-      </ul>
-    </article>
-  }
-</section>
+<mat-card appearance="outlined" class="panel">
+  <mat-card-header>
+    <mat-card-title>Assistente de domínio</mat-card-title>
+    <mat-card-subtitle>IA aplicada ao faturamento: analisa notas e estoque sem depender de API externa.</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="ask">
+      <mat-form-field subscriptSizing="dynamic">
+        <mat-label>Pergunta</mat-label>
+        <input matInput [(ngModel)]="question" (keyup.enter)="ask()" placeholder="Impressão, falha ou concorrência" />
+      </mat-form-field>
+      <button mat-flat-button type="button" (click)="ask()" [disabled]="loading">Perguntar</button>
+    </div>
+
+    <mat-chip-set class="chips" aria-label="Perguntas sugeridas">
+      <mat-chip (click)="askFor('Quais notas estão abertas?')">Notas abertas</mat-chip>
+      <mat-chip (click)="askFor('Como testar concorrência?')">Concorrência</mat-chip>
+      <mat-chip (click)="askFor('Como simular falha do estoque?')">Falha</mat-chip>
+    </mat-chip-set>
+
+    @if (loading) {
+      <div class="loading">
+        <mat-progress-spinner mode="indeterminate" diameter="32" />
+      </div>
+    } @else if (reply) {
+      <div class="reply" aria-live="polite">
+        <p>{{ reply.answer }}</p>
+        <ul>
+          @for (item of reply.highlights; track item) {
+            <li>{{ item }}</li>
+          }
+        </ul>
+      </div>
+    }
+  </mat-card-content>
+</mat-card>

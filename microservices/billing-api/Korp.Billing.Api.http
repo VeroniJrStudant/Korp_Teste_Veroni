@@ -1,0 +1,32 @@
+@host = http://localhost:5082
+
+### Saúde do serviço
+GET {{host}}/api/health
+
+### Listar notas fiscais
+GET {{host}}/api/invoices
+
+### Criar nota Aberta
+POST {{host}}/api/invoices
+Content-Type: application/json
+
+{
+  "items": [
+    { "productId": "COLE-O-ID-DO-PRODUTO", "quantity": 2 }
+  ]
+}
+
+### Imprimir a nota (fecha e baixa o estoque)
+POST {{host}}/api/invoices/COLE-O-ID-DA-NOTA/print
+Idempotency-Key: print-demo-1
+
+### Insights do assistente
+GET {{host}}/api/ai/insights
+
+### Perguntar ao assistente
+POST {{host}}/api/ai/ask
+Content-Type: application/json
+
+{
+  "question": "Como simular a falha do estoque?"
+}

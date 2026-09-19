@@ -1,0 +1,45 @@
+@host = http://localhost:5081
+
+### Saúde do serviço
+GET {{host}}/api/health
+
+### Listar produtos
+GET {{host}}/api/products
+
+### Buscar produtos
+GET {{host}}/api/products?search=PAR-M8
+
+### Cadastrar produto
+POST {{host}}/api/products
+Content-Type: application/json
+
+{
+  "code": "ACO-1045",
+  "description": "Barra de aço SAE 1045",
+  "balance": 12
+}
+
+### Sugerir descrição com a IA local
+POST {{host}}/api/ai/suggest-description
+Content-Type: application/json
+
+{
+  "code": "BRO-10",
+  "name": "Broca de aço rápido 10mm"
+}
+
+### Ativar falha simulada
+POST {{host}}/api/chaos
+Content-Type: application/json
+
+{
+  "enabled": true
+}
+
+### Restaurar o serviço
+POST {{host}}/api/chaos
+Content-Type: application/json
+
+{
+  "enabled": false
+}

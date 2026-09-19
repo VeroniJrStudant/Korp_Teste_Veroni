@@ -1,34 +1,45 @@
 <div class="head">
-  <p class="muted">Notas nascem Abertas. A impressão fecha a nota e baixa o estoque.</p>
-  <a class="btn" routerLink="/notas/nova">Nova nota</a>
+  <p class="hint">Notas nascem Abertas. A impressão fecha a nota e baixa o estoque.</p>
+  <a mat-flat-button routerLink="/notas/nova">
+    <mat-icon>add</mat-icon>
+    Nova nota
+  </a>
 </div>
 
-<section class="card">
-  <table>
-    <thead>
-      <tr>
-        <th>Número</th>
-        <th>Status</th>
-        <th>Itens</th>
-        <th>Criada em</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (invoice of invoices; track invoice.id) {
-        <tr>
-          <td><b>NF {{ pad(invoice.number) }}</b></td>
-          <td><span class="badge" [class.closed]="invoice.status === 'Fechada'">{{ invoice.status }}</span></td>
-          <td>{{ invoice.items.length }}</td>
-          <td>{{ invoice.createdAt | date:'short' }}</td>
-          <td>
-            <a class="link" [routerLink]="['/notas', invoice.id]">Abrir</a>
-            <a class="btn print-link" [routerLink]="['/notas', invoice.id]">Imprimir</a>
+<mat-card appearance="outlined">
+  <mat-card-content>
+    <div class="table-wrap">
+      <table mat-table [dataSource]="invoices">
+        <ng-container matColumnDef="number">
+          <th mat-header-cell *matHeaderCellDef>Número</th>
+          <td mat-cell *matCellDef="let invoice"><b>NF {{ pad(invoice.number) }}</b></td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let invoice">
+            <mat-chip [highlighted]="invoice.status === 'Fechada'">{{ invoice.status }}</mat-chip>
           </td>
+        </ng-container>
+        <ng-container matColumnDef="items">
+          <th mat-header-cell *matHeaderCellDef class="num">Itens</th>
+          <td mat-cell *matCellDef="let invoice" class="num">{{ invoice.items.length }}</td>
+        </ng-container>
+        <ng-container matColumnDef="createdAt">
+          <th mat-header-cell *matHeaderCellDef>Criada em</th>
+          <td mat-cell *matCellDef="let invoice">{{ invoice.createdAt | date:'short' }}</td>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let invoice" class="num">
+            <a mat-button [routerLink]="['/notas', invoice.id]">Abrir</a>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+        <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="empty" [attr.colspan]="columns.length">Nenhuma nota cadastrada.</td>
         </tr>
-      } @empty {
-        <tr><td colspan="5" class="muted">Nenhuma nota cadastrada.</td></tr>
-      }
-    </tbody>
-  </table>
-</section>
+      </table>
+    </div>
+  </mat-card-content>
+</mat-card>

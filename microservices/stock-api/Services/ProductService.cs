@@ -83,8 +83,11 @@ public class ProductService(StockDbContext db, ILogger<ProductService> logger)
 
         await using var tx = await db.Database.BeginTransactionAsync(ct);
 
-        var lockKey = BitConverter.ToInt64(productId.ToByteArray(), 0);
-        await db.Database.ExecuteSqlInterpolatedAsync($"SELECT pg_advisory_xact_lock({lockKey})", ct);
+        if (db.Database.IsNpgsql())
+        {
+            var lockKey = BitConverter.ToInt64(productId.ToByteArray(), 0);
+            await db.Database.ExecuteSqlInterpolatedAsync($"SELECT pg_advisory_xact_lock({lockKey})", ct);
+        }
 
         var existing = await db.Movements.FirstOrDefaultAsync(m => m.OperationId == request.OperationId, ct);
         var product = await db.Products.FirstOrDefaultAsync(p => p.Id == productId, ct)
@@ -128,8 +131,11 @@ public class ProductService(StockDbContext db, ILogger<ProductService> logger)
         }
 
         await using var tx = await db.Database.BeginTransactionAsync(ct);
-        var lockKey = BitConverter.ToInt64(productId.ToByteArray(), 0);
-        await db.Database.ExecuteSqlInterpolatedAsync($"SELECT pg_advisory_xact_lock({lockKey})", ct);
+        if (db.Database.IsNpgsql())
+        {
+            var lockKey = BitConverter.ToInt64(productId.ToByteArray(), 0);
+            await db.Database.ExecuteSqlInterpolatedAsync($"SELECT pg_advisory_xact_lock({lockKey})", ct);
+        }
 
         var product = await db.Products.FirstOrDefaultAsync(p => p.Id == productId, ct)
                       ?? throw StockErrors.NotFound($"Produto {productId} não encontrado.");

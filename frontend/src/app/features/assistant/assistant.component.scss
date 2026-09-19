@@ -1,11 +1,40 @@
-.card {
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 22px;
+.panel {
   max-width: 760px;
 }
-.ask { display: flex; gap: 8px; }
-.ask input { flex: 1; }
-.chips { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0 16px; }
-article p { line-height: 1.6; }
+
+.ask {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.ask mat-form-field {
+  flex: 1 1 240px;
+}
+
+.chips {
+  margin: 16px 0;
+}
+
+.chips mat-chip {
+  cursor: pointer;
+}
+
+.loading {
+  display: grid;
+  justify-items: center;
+  padding: 24px 0;
+}
+
+.reply p {
+  margin: 0 0 8px;
+  line-height: 1.6;
+}
+
+.reply ul {
+  margin: 0;
+  padding-left: 24px;
+  line-height: 1.8;
+  color: var(--mat-sys-on-surface-variant);
+}

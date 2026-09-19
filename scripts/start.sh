@@ -21,9 +21,9 @@ done
 trap 'kill $(jobs -p) 2>/dev/null' EXIT
 
 echo "→ API de estoque em http://localhost:5081/swagger"
-dotnet run --project "$ROOT/services/stock-api/Korp.Stock.Api.csproj" --launch-profile http &
+dotnet run --project "$ROOT/microservices/stock-api/Korp.Stock.Api.csproj" --launch-profile http &
 echo "→ API de faturamento em http://localhost:5082/swagger"
-dotnet run --project "$ROOT/services/billing-api/Korp.Billing.Api.csproj" --launch-profile http &
+dotnet run --project "$ROOT/microservices/billing-api/Korp.Billing.Api.csproj" --launch-profile http &
 
 echo "→ Angular em http://localhost:4200"
 cd "$ROOT/frontend"

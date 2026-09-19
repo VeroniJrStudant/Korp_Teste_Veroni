@@ -1,9 +1,15 @@
 <Solution>
-  <Folder Name="/services/" />
-  <Folder Name="/services/billing-api/">
-    <Project Path="services/billing-api/Korp.Billing.Api.csproj" />
+  <Folder Name="/microservices/" />
+  <Folder Name="/microservices/billing-api.tests/">
+    <Project Path="microservices/billing-api.tests/Korp.Billing.Api.Tests.csproj" />
   </Folder>
-  <Folder Name="/services/stock-api/">
-    <Project Path="services/stock-api/Korp.Stock.Api.csproj" />
+  <Folder Name="/microservices/billing-api/">
+    <Project Path="microservices/billing-api/Korp.Billing.Api.csproj" />
+  </Folder>
+  <Folder Name="/microservices/stock-api.tests/">
+    <Project Path="microservices/stock-api.tests/Korp.Stock.Api.Tests.csproj" />
+  </Folder>
+  <Folder Name="/microservices/stock-api/">
+    <Project Path="microservices/stock-api/Korp.Stock.Api.csproj" />
   </Folder>
 </Solution>

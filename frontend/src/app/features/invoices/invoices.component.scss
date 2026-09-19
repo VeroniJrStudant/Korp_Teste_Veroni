@@ -1,33 +1,30 @@
 .head {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  gap: 16px;
   margin-bottom: 16px;
 }
 
-.card {
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 8px 18px 18px;
+.hint {
+  margin: 0;
+  color: var(--mat-sys-on-surface-variant);
 }
 
-.badge {
-  background: #f5d78e;
-  color: #7a4b00;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 700;
+.table-wrap {
+  overflow: auto;
 }
 
-.badge.closed {
-  background: #c8ebe0;
-  color: #0f5c49;
+table {
+  width: 100%;
 }
 
-.print-link {
-  margin-left: 10px;
-  font-size: 13px;
-  padding: 6px 12px;
+.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.empty {
+  padding: 24px 0;
+  color: var(--mat-sys-on-surface-variant);
 }

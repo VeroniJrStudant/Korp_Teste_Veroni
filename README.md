@@ -9,15 +9,23 @@ Repositório público no formato pedido pelo enunciado: `Korp_Teste_SeuNome`.
 ## Arquitetura
 
 ```
-Angular (localhost:4200)
-   ├─ Serviço de Estoque     http://localhost:5081   (produtos e saldos)
-   └─ Serviço de Faturamento http://localhost:5082   (notas fiscais)
-                │
-                └── chama o Estoque na criação de itens e na impressão
-PostgreSQL 16 (localhost:5433)
-   ├─ korp_stock
-   └─ korp_billing
+frontend/                 Angular 19 + Angular Material   :4200
+microservices/
+  stock-api/              Estoque      :5081
+  billing-api/            Faturamento  :5082
+infra/                    init do PostgreSQL
+scripts/                  start.sh e test-concurrency.sh
 ```
+
+O Angular chama as duas APIs. O faturamento chama o estoque na criação de itens e na impressão.
+
+PostgreSQL 16 em `localhost:5433`, com os bancos `korp_stock` e `korp_billing`.
+
+Cada parte tem o próprio README, com endpoints, decisões e testes:
+
+- [frontend](./frontend/README.md)
+- [microsserviço de Estoque](./microservices/stock-api/README.md)
+- [microsserviço de Faturamento](./microservices/billing-api/README.md)
 
 ## Como executar
 
@@ -38,8 +46,8 @@ Em quatro terminais:
 
 ```bash
 docker-compose up -d postgres
-dotnet run --project services/stock-api --launch-profile http
-dotnet run --project services/billing-api --launch-profile http
+dotnet run --project microservices/stock-api --launch-profile http
+dotnet run --project microservices/billing-api --launch-profile http
 cd frontend && npm start
 ```
 
@@ -52,6 +60,20 @@ cd frontend && npm start
 5. **Concorrência**: produto `PAR-M8` nasce com saldo 1. Duas notas com qtd 1; só uma imprime.
 6. **Idempotência**: reimprimir nota Fechada não baixa estoque de novo; baixas usam `operationId` único.
 7. **IA local**: descrição de produto, insights no painel e assistente de domínio.
+8. **Interface**: 100% Angular Material (Material Design 3), com tema claro e escuro trocável na barra superior.
+
+## Testes
+
+```bash
+dotnet test Korp.Teste.slnx
+cd frontend && npm test
+```
+
+Os testes de banco usam **PostgreSQL** (Testcontainers ou o compose na porta 5433). Sem Docker, eles são ignorados; os de IA local, gateway HTTP e Angular continuam.
+
+- **Estoque:** cadastro, validação, baixa, idempotência, estorno e `pg_advisory_xact_lock`.
+- **Faturamento:** numeração sequencial, impressão, reimpressão idempotente, compensação e gateway HTTP (409/503).
+- **Angular:** serviços HTTP, interceptor de erro, `ngOnChanges` da linha de item, numeração da lista e serviço de tema.
 
 ## Dados iniciais
 
@@ -63,10 +85,8 @@ cd frontend && npm start
 | DSC-45 | Disco de corte | 50 |
 | OLE-20L | Óleo industrial 20L | 8 |
 
-## Detalhamento técnico
+## Detalhamento técnico e roteiro
 
-Arquivo pedido no enunciado:
-
-- [DETALHAMENTO_TECNICO.md](./DETALHAMENTO_TECNICO.md)
-- [DETALHAMENTO_TECNICO.pdf](./DETALHAMENTO_TECNICO.pdf)
+- [DETALHAMENTO_TECNICO.md](./DETALHAMENTO_TECNICO.md) · [PDF](./DETALHAMENTO_TECNICO.pdf)
+- [ROTEIRO_VIDEO.md](./ROTEIRO_VIDEO.md) · [PDF](./ROTEIRO_VIDEO.pdf)
 

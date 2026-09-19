@@ -1,45 +1,75 @@
 @if (loading) {
-  <p class="muted">Carregando painel…</p>
+  <div class="loading">
+    <mat-progress-spinner mode="indeterminate" diameter="40" />
+    <p>Carregando indicadores…</p>
+  </div>
 } @else {
   <div class="kpis">
-    <article>
-      <span>Produtos</span>
-      <strong>{{ products.length }}</strong>
-    </article>
-    <article>
-      <span>Saldo total</span>
-      <strong>{{ stockTotal }}</strong>
-    </article>
-    <article>
-      <span>Notas abertas</span>
-      <strong>{{ openCount }}</strong>
-    </article>
-    <article>
-      <span>Notas fechadas</span>
-      <strong>{{ closedCount }}</strong>
-    </article>
+    <mat-card appearance="outlined">
+      <mat-card-content>
+        <span class="label">Produtos</span>
+        <strong>{{ products.length }}</strong>
+      </mat-card-content>
+    </mat-card>
+    <mat-card appearance="outlined">
+      <mat-card-content>
+        <span class="label">Saldo total</span>
+        <strong>{{ stockTotal }}</strong>
+      </mat-card-content>
+    </mat-card>
+    <mat-card appearance="outlined">
+      <mat-card-content>
+        <span class="label">Notas abertas</span>
+        <strong>{{ openCount }}</strong>
+      </mat-card-content>
+    </mat-card>
+    <mat-card appearance="outlined">
+      <mat-card-content>
+        <span class="label">Notas fechadas</span>
+        <strong>{{ closedCount }}</strong>
+      </mat-card-content>
+    </mat-card>
   </div>
 
   <div class="grid">
-    <section class="card">
-      <h2>Insights do assistente</h2>
-      @for (item of insights; track item.title) {
-        <div class="insight" [attr.data-sev]="item.severity">
-          <b>{{ item.title }}</b>
-          <p>{{ item.detail }}</p>
-        </div>
-      }
-    </section>
+    <mat-card appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Insights do assistente</mat-card-title>
+        <mat-card-subtitle>Gerados pela API de faturamento, sem LLM externo</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        @if (insights.length) {
+          <mat-list>
+            @for (item of insights; track item.title) {
+              <mat-list-item>
+                <mat-icon matListItemIcon>{{ icon(item.severity) }}</mat-icon>
+                <span matListItemTitle>{{ item.title }}</span>
+                <span matListItemLine>{{ item.detail }}</span>
+              </mat-list-item>
+            }
+          </mat-list>
+        } @else {
+          <p class="empty">Nenhum insight disponível no momento.</p>
+        }
+      </mat-card-content>
+    </mat-card>
 
-    <section class="card">
-      <h2>Como demonstrar o teste</h2>
-      <ol>
-        <li>Cadastre ou use os produtos já semeados, inclusive <code>PAR-M8</code> com saldo 1.</li>
-        <li>Crie uma nota Aberta com vários produtos e clique em Imprimir.</li>
-        <li>Ative <b>Simular falha do estoque</b>, tente imprimir outra nota e veja a recuperação.</li>
-        <li>Crie duas notas com o mesmo parafuso e imprima as duas para concorrência.</li>
-      </ol>
-      <a class="btn" routerLink="/notas/nova">Nova nota fiscal</a>
-    </section>
+    <mat-card appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Como demonstrar o teste</mat-card-title>
+        <mat-card-subtitle>Roteiro curto para a avaliação</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <ol>
+          <li>Use os produtos já semeados, inclusive <code>PAR-M8</code> com saldo 1.</li>
+          <li>Crie uma nota Aberta com vários produtos e clique em Imprimir.</li>
+          <li>Ative <b>Simular falha do estoque</b>, tente imprimir e veja a recuperação.</li>
+          <li>Crie duas notas com o mesmo parafuso e imprima as duas para concorrência.</li>
+        </ol>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <a mat-flat-button routerLink="/notas/nova">Nova nota fiscal</a>
+      </mat-card-actions>
+    </mat-card>
   </div>
 }

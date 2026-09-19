@@ -1,16 +1,30 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { catchError, EMPTY, exhaustMap, finalize, Subject, takeUntil } from 'rxjs';
 import { Invoice, Product } from '../../core/models';
-import { BillingService } from '../../core/billing.service';
-import { StockService } from '../../core/stock.service';
-import { ToastService } from '../../core/toast.service';
+import { BillingService } from '../../core/services/billing.service';
+import { StockService } from '../../core/services/stock.service';
+import { ToastService } from '../../core/services/toast.service';
 import { DraftItem, InvoiceItemRowComponent } from './invoice-item-row.component';
 
 @Component({
   selector: 'app-invoice-editor',
-  imports: [CommonModule, RouterLink, InvoiceItemRowComponent],
+  imports: [
+    CommonModule,
+    RouterLink,
+    InvoiceItemRowComponent,
+    MatButtonModule,
+    MatCardModule,
+    MatChipsModule,
+    MatIconModule,
+    MatProgressSpinnerModule
+  ],
   templateUrl: './invoice-editor.component.html',
   styleUrl: './invoice-editor.component.scss'
 })

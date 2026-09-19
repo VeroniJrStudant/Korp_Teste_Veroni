@@ -1,19 +1,35 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
 import { debounceTime, distinctUntilChanged, startWith, Subject, switchMap, takeUntil } from 'rxjs';
 import { Product } from '../../core/models';
-import { StockService } from '../../core/stock.service';
-import { ToastService } from '../../core/toast.service';
+import { StockService } from '../../core/services/stock.service';
+import { ToastService } from '../../core/services/toast.service';
 
 @Component({
   selector: 'app-products',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatTableModule
+  ],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss'
 })
 export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
   products: Product[] = [];
+  readonly columns = ['code', 'description', 'balance', 'actions'];
   editing?: Product;
   suggesting = false;
   saving = false;
